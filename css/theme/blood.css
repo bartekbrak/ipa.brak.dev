@@ -22,6 +22,9 @@
   cursor: pointer;
   font-size: 3em;
 }
+.word a {
+  color: inherit !important;
+}
 /*********************************************
  * GLOBAL STYLES
  *********************************************/

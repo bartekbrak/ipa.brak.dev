@@ -517,33 +517,51 @@
             'short and basic': [
                 {
                     phon : '/ˈdeɪtə/',
-                    src: 'https://upload.wikimedia.org/wikipedia/commons/6/60/En-us-data1.ogg'
+                    src: 'https://upload.wikimedia.org/wikipedia/commons/6/60/En-us-data1.ogg',
+                    word: 'data',
                 },
                 {
                     phon : '/ˈkʰiː/',
-                    src: 'https://upload.wikimedia.org/wikipedia/commons/2/25/En-uk-key.ogg'
+                    src: 'https://upload.wikimedia.org/wikipedia/commons/2/25/En-uk-key.ogg',
+                    word: 'key',
                 },
 
+            ],
+            'endings': [
+                {
+                    src: 'https://upload.wikimedia.org/wikipedia/commons/b/b1/En-us-thing.ogg',
+                    phon: '/θɪŋ/',
+                    word: 'thing',
+                },
+                {
+                    src: 'https://upload.wikimedia.org/wikipedia/commons/0/05/En-us-things.ogg',
+                    phon: '/θɪŋz/',
+                    word: 'things',
+                }
             ],
             'longer': [
                 {
                     src: 'https://audio00.forvo.com/audios/mp3/q/k/qk_9189479_39_472837_1174808.mp3',
-                    phon: '/ˈmɛʒəmənt/'
+                    phon: '/ˈmɛʒəmənt/',
+                    word: 'measurement',
                 },
                 {
                     src: 'https://audio00.forvo.com/audios/mp3/p/w/pw_9400416_39_3308457.mp3',
                     phon: '/ˈvɑːtʃɑː/',
+                    word: 'varchar',
                 },
                 {
                     src: 'https://audio00.forvo.com/audios/mp3/r/c/rc_9340086_39_3308457.mp3',
                     phon: '/ˈvɑːkɑː/',
-                    text: 'less common pronunciation, /k/ because of "character", somehow misleading /tʃ/ prevails'
+                    word: 'varchar',
+                    text: 'less common pronunciation, /k/ because of "character", somehow misleading /tʃ/ prevails',
                 },
             ],
             'unpronounceables': [
                 {
                     src: 'https://audio00.forvo.com/audios/mp3/s/u/su_8981864_39_283446_205788.mp3',
-                    phon: '/ˌhaɪəɹˈɑːkɪkəl/'
+                    phon: '/ˌhaɪəɹˈɑːkɪkəl/',
+                    word: 'hierarchical',
                 }
             ]
         }
@@ -565,17 +583,18 @@
             for (const stack_name of Object.keys(stacks)) {
                 let new_section = $('<section></section>')
                 slides.append(new_section)
-                new_section.append(`<section>${stack_name}</section>`)
+                new_section.append(`<section><h3>${stack_name}</h3></section>`)
                 for (let word of stacks[stack_name]) {
-                    console.log(
+                    let text = word['text'] || '';
                     new_section.append(
                         `<section>
                             <span class="word">
                                 <audio preload="none"><source src="${word['src']}" ></audio>
-                                <span class="phon">${word['phon']}</span>
+                                <a href="https://en.wiktionary.org/wiki/${word['word']}#English"><span class="phon">${word['phon']}</span></a>
+                                <br>${text}
                             </span>
                         </section>`
-                    ));
+                    );
                 }
             }
             // split into individual characters
@@ -644,9 +663,11 @@
                             prototype: confusing, works but has little content
 
                         * go right to see the words.
-                        * Hover and `CTRL` + Hover to hear the words and individual sounds.
-                        * `Esc` - overview.
+                        * hover over words for pronunciation, try to guess the word from just IPA,
+                        * hold `CTRL` and hover for individual sounds
+                        * click to see wiktionary entry
                         * go down for project notes
+                        * `Esc` - overview.
                     </section>
                     <section data-markdown>
                         * For simplicity I will use [Received Pronunciation](https://en.wikipedia.org/wiki/Received_Pronunciation),
@@ -678,6 +699,22 @@
                         #### TODO
                         * adhere to licensing properly
                     </section>
+
+                    <section data-markdown>
+                        #### Development Notes
+                        * Individual sound files taken from wikipedia tables:
+                            * [IPA_pulmonics_audio](https://en.wikipedia.org/wiki/Template:IPA_pulmonics_audio)
+                            * [IPA_chart_vowels_with_audio](https://en.wikipedia.org/wiki/Template:IPA_chart_vowels_with_audio)
+
+                        <!--using these regexp-->
+                        <!--# sublime text style-->
+                        <!--# consonants-->
+                        <!--(?s)<td.*?<a href="(.*?)" title="(.*?)".*?>(.)</a>.*?src="//(upload.wikimedia.*?og[ga])".*?</td>-->
+                        <!--<audio preload="none" id="\3" data-wikipage="\1" data-title="\2"><source src="https://\4"></audio>-->
+                        <!--# vowels WRONG, shwa was eaten-->
+                        <!--(?s)<span title=.*?><a href="(.*?)" title="(.*?)">(.+?)</a>.*?src="//(.*?.ogg)"-->
+                        <!--\n\n<audio preload="none" id="\3" data-wikipage="\1" data-title="\2"><source src="https://\4"></audio>\n\n-->
+                    </section>
                     <section>
                         <span class="phontest">
                             <h2>
@@ -690,21 +727,6 @@
                             /fæt pɛt pɪg gat drʌnk tʊk wɔk/
                             /ʃarp θɔrnz tɛr pʊr dirz fər/
                         </span>
-                    </section>
-                    <section data-markdown>
-                        #### Dev Notes
-                        * Individual sound files were from `'view-source:'` in
-                        * [IPA_pulmonics_audio](https://en.wikipedia.org/wiki/Template:IPA_pulmonics_audio)
-                        * [IPA_chart_vowels_with_audio](https://en.wikipedia.org/wiki/Template:IPA_chart_vowels_with_audio)
-
-                        <!--using these regexp-->
-                        <!--# sublime text style-->
-                        <!--# consonants-->
-                        <!--(?s)<td.*?<a href="(.*?)" title="(.*?)".*?>(.)</a>.*?src="//(upload.wikimedia.*?og[ga])".*?</td>-->
-                        <!--<audio preload="none" id="\3" data-wikipage="\1" data-title="\2"><source src="https://\4"></audio>-->
-                        <!--# vowels WRONG, shwa was eaten-->
-                        <!--(?s)<span title=.*?><a href="(.*?)" title="(.*?)">(.+?)</a>.*?src="//(.*?.ogg)"-->
-                        <!--\n\n<audio preload="none" id="\3" data-wikipage="\1" data-title="\2"><source src="https://\4"></audio>\n\n-->
                     </section>
                 </section>
                 <!-- JS will inject words slides here -->
