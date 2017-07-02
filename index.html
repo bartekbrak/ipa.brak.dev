@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Programmer's IPA</title>
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/blood.css">
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+            crossorigin="anonymous"></script>
+
+    <link href="http://bartekbrak.github.io/images/favicon.ico" rel="icon">
+    </head>
+    <body>
+    <script>
+        $(document).ready(function(){
+            var current = $('audio').first();
+            const ignore = '/ˈʰː';
+            $('.phon').each(function(){
+                var txt = $(this).text();
+                var html = '';
+                for (t in txt)
+                {
+                    html = html + '<span>' + txt[t] + '</span>';
+                }
+                $(this).html(html);
+                console.log(txt, 'processed')
+            });
+            $(document).on('mouseenter', '.phon span', function(e){
+                if (e.ctrlKey) {
+                    var graph = $(this).text();
+                    if ($.inArray(graph, ignore) === -1) {
+                        // ther's no 'stop' so pause and rewind
+                        current.trigger('pause');
+                        current.prop("currentTime", 0);
+                        current = $('#' + graph);
+                        $(this).css('color', '#a23');
+                        current.trigger('play');
+                    }
+                }
+            }).on('mouseleave', '.phon span', function(e){
+                    $(this).css('color', 'inherit');
+            });
+            $(document).on('mouseenter', '.word', function(e){
+                if (! e.ctrlKey) {
+                    $(this).css('color', '#a23');
+                    $(this).find('audio').first().trigger('play');
+                }
+            }).on('mouseleave', '.word', function(e){
+                if (! e.ctrlKey) $(this).css('color', 'inherit');
+            });
+        });
+    </script>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <section data-markdown>
+                        ## Programmer's [IPA](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet)
+                        This page will help you learn some IPA in context of programming jargon.
+
+                            version alpha: confusing, works but has little content
+
+                        * go right to see the words.
+                        * Hover and `CTRL` + Hover to hear the words and individual sounds.
+                        * `Esc` - overview.
+                        * go down for project notes
+                    </section>
+                    <section data-markdown>
+                        * For simplicity I will use [Received Pronunciation](https://en.wikipedia.org/wiki/Received_Pronunciation),
+                        the one I think I use, If there's interest in [General American](https://en.wikipedia.org/wiki/General_American)
+                        we'll supply that in the future. Sorry for the imperial bias.
+                        * For audio, I will source wiktionary where I can, and forvo where I can't find the pronunciation
+                        * All individual sounds come from Wikipedia
+                    </section>
+                    <section data-markdown>
+                        #### Various links for those who want to go deeper:
+
+                        * [Wikipedia - IPA pulmonic consonant chart with audio](https://en.wikipedia.org/wiki/IPA_pulmonic_consonant_chart_with_audio)
+                        * [Wikipedia - IPA vowels chart with audio](https://en.wikipedia.org/wiki/IPA_vowels_chart_with_audio)
+                        * [Wikipedia Help:IPA for English](https://en.wikipedia.org/wiki/Help:IPA_for_English)
+                        * [Interactive IPA Chart - University of Victoria](http://web.uvic.ca/ling/resources/ipa/charts/IPAlab/IPAlab.htm)
+                        * [Interactive IPA Chart by Jonathan Dowse](http://jbdowse.com/ipa)
+                        * [Phonetic resources - Jennifer Smith, UNC-Chapel Hill](http://www.unc.edu/~jlsmith/pht-url.html#%298%29) -
+                        lots of phonetics software, way more than you need
+
+
+                    </section>
+                    <section data-markdown>
+                        #### Licensing
+                        * [wikipedia licensing](https://commons.wikimedia.org/wiki/Commons:Reusing_content_outside_Wikimedia)
+                        * [forvo licensing](]https://forvo.com/license/)
+                        #### Technologies used
+                        * [reveal.js](http://lab.hakim.se/reveal-js/) + blood theme by [Walther](http://github.com/Walther)
+                        * [jQuery 3.2.1](https://jquery.com/)
+                        #### TODO
+                        * adhere to licensing properly
+                    </section>
+                    <section>
+                        <span class="phontest">
+                            <h2>
+                                <a href="https://fonts.google.com/specimen/Voces">Font</a> test
+                            </h2>
+
+                            ,bcdfhjklmnpqrstvwxz¡çðħŋƈƙƥƭǀǁǂǃȷɓɕɖɗɟɠɡɢɣɥɦɧɫɬɭɮɰɱɲ
+                                ɳɴɸɹɺɻɽɾʀʁʂʃʄʇʈʋʍʎʐʑʒʔʕʖʗʘʙʛʜʝʟʠʡʢʨʬʭʲʷʼˀ˔˞ˠˤ̢̝̞̟̠̥̪̯̱̃̆̊͆͡βθχᵑᶑᶢ’‼ⱱꞎ
+                            /leɪk li:f paɪn koʊn ku:l braʊn sɔɪl /
+                            /fæt pɛt pɪg gat drʌnk tʊk wɔk/
+                            /ʃarp θɔrnz tɛr pʊr dirz fər/
+                        </span>
+                    </section>
+                    <section data-markdown>
+                        #### Dev Notes
+                        * Individual sound files were from `'view-source:'` in
+                        * [IPA_pulmonics_audio](https://en.wikipedia.org/wiki/Template:IPA_pulmonics_audio)
+                        * [IPA_chart_vowels_with_audio](https://en.wikipedia.org/wiki/Template:IPA_chart_vowels_with_audio)
+
+                        <!--using these regexp-->
+                        <!--# sublime text style-->
+                        <!--# consonants-->
+                        <!--(?s)<td.*?<a href="(.*?)" title="(.*?)".*?>(.)</a>.*?src="//(upload.wikimedia.*?og[ga])".*?</td>-->
+                        <!--<audio preload="none" id="\3" data-wikipage="\1" data-title="\2"><source src="https://\4"></audio>-->
+                        <!--# vowels WRONG, shwa was eaten-->
+                        <!--(?s)<span title=.*?><a href="(.*?)" title="(.*?)">(.+?)</a>.*?src="//(.*?.ogg)"-->
+                        <!--\n\n<audio preload="none" id="\3" data-wikipage="\1" data-title="\2"><source src="https://\4"></audio>\n\n-->
+                    </section>
+                </section>
+                <!--###### actual words #############################################################################-->
+                <section>
+
+                    <section><span class="word"><audio preload="none"><source
+                        src="https://audio00.forvo.com/audios/mp3/q/k/qk_9189479_39_472837_1174808.mp3"
+                    ></audio><span class="phon">
+                        /ˈmɛʒəmənt/
+                    </span> </span></section>
+
+
+                    <section><span class="word"><audio preload="none"><source
+                        src="https://upload.wikimedia.org/wikipedia/commons/2/25/En-uk-key.ogg"
+                    ></audio><span class="phon">
+                        /ˈkʰiː/
+                    </span> </span></section>
+
+
+                    <section><span class="word"><audio preload="none"><source
+                        src="https://audio00.forvo.com/audios/mp3/p/w/pw_9400416_39_3308457.mp3"
+                    ></audio><span class="phon">
+                        /ˈvɑːtʃɑː/
+                    </span><br></span><span class="word"><audio preload="none"><source
+                            src="https://audio00.forvo.com/audios/mp3/r/c/rc_9340086_39_3308457.mp3"
+                    ></audio><span class="phon">
+                        /ˈvɑːkɑː/
+                    </span> </span>
+                        <br>
+                    two pronunciations, /k/ because of "character", somehow misleading /tʃ/ prevails. here in US prounciation
+                    </section>
+
+
+                </section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                progress: true,
+                slideNumber: true,
+                mouseWheel: true,
+                previewLinks: true,
+                transitionSpeed: 'fast',
+                dependencies: [
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                ]
+            });
+        </script>
+
+    <audio preload="none" id="m" data-wikipage="/wiki/Nasal_stop" class="mw-redirect" data-title="Nasal stop"><source src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Bilabial_nasal.ogg"></audio>
+    <audio preload="none" id="ɱ" data-wikipage="/wiki/Labiodental_nasal" data-title="Labiodental nasal"><source src="https://upload.wikimedia.org/wikipedia/commons/1/18/Labiodental_nasal.ogg"></audio>
+    <audio preload="none" id="n" data-wikipage="/wiki/Dental,_alveolar_and_postalveolar_nasals#Dental_or_denti-alveolar" data-title="Dental, alveolar and postalveolar nasals"><source src="https://upload.wikimedia.org/wikipedia/commons/2/29/Alveolar_nasal.ogg"></audio>
+    <audio preload="none" id="ɳ" data-wikipage="/wiki/Retroflex_nasal" data-title="Retroflex nasal"><source src="https://upload.wikimedia.org/wikipedia/commons/a/af/Retroflex_nasal.ogg"></audio>
+    <audio preload="none" id="ɲ" data-wikipage="/wiki/Palatal_nasal#Palatal_or_alveolo-palatal" data-title="Palatal nasal"><source src="https://upload.wikimedia.org/wikipedia/commons/4/46/Palatal_nasal.ogg"></audio>
+    <audio preload="none" id="ŋ" data-wikipage="/wiki/Velar_nasal" data-title="Velar nasal"><source src="https://upload.wikimedia.org/wikipedia/commons/3/39/Velar_nasal.ogg"></audio>
+    <audio preload="none" id="ɴ" data-wikipage="/wiki/Uvular_nasal" data-title="Uvular nasal"><source src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Uvular_nasal.ogg"></audio>
+    <audio preload="none" id="p" data-wikipage="/wiki/Plosive_consonant" class="mw-redirect" data-title="Plosive consonant"><source src="https://upload.wikimedia.org/wikipedia/commons/5/51/Voiceless_bilabial_plosive.ogg"></audio>
+    <audio preload="none" id="b" data-wikipage="/wiki/Voiced_bilabial_stop" data-title="Voiced bilabial stop"><source src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Voiced_bilabial_plosive.ogg"></audio>
+    <audio preload="none" id="t" data-wikipage="/wiki/Voiceless_labiodental_stop" data-title="Voiceless labiodental stop"><source src="https://upload.wikimedia.org/wikipedia/commons/0/02/Voiceless_alveolar_plosive.ogg"></audio>
+    <audio preload="none" id="d" data-wikipage="/wiki/Voiced_dental_and_alveolar_stops#Alveolar" data-title="Voiced dental and alveolar stops"><source src="https://upload.wikimedia.org/wikipedia/commons/0/01/Voiced_alveolar_plosive.ogg"></audio>
+    <audio preload="none" id="ʈ" data-wikipage="/wiki/Voiceless_retroflex_stop" data-title="Voiceless retroflex stop"><source src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Voiceless_retroflex_stop.oga"></audio>
+    <audio preload="none" id="ɖ" data-wikipage="/wiki/Voiced_retroflex_stop" data-title="Voiced retroflex stop"><source src="https://upload.wikimedia.org/wikipedia/commons/2/27/Voiced_retroflex_stop.oga"></audio>
+    <audio preload="none" id="c" data-wikipage="/wiki/Voiceless_palatal_stop#Palatal_or_alveolo-palatal" data-title="Voiceless palatal stop"><source src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Voiceless_palatal_plosive.ogg"></audio>
+    <audio preload="none" id="ɟ" data-wikipage="/wiki/Voiced_palatal_stop#Palatal_or_alveolo-palatal" data-title="Voiced palatal stop"><source src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Voiced_palatal_plosive.ogg"></audio>
+    <audio preload="none" id="k" data-wikipage="/wiki/Voiceless_velar_stop" data-title="Voiceless velar stop"><source src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Voiceless_velar_plosive.ogg"></audio>
+    <audio preload="none" id="ɡ" data-wikipage="/wiki/Voiced_velar_stop" data-title="Voiced velar stop"><source src="https://upload.wikimedia.org/wikipedia/commons/5/58/Voiced_velar_stop.ogg"></audio>
+    <audio preload="none" id="q" data-wikipage="/wiki/Voiceless_uvular_stop" data-title="Voiceless uvular stop"><source src="https://upload.wikimedia.org/wikipedia/commons/1/19/Voiceless_uvular_plosive.ogg"></audio>
+    <audio preload="none" id="ɢ" data-wikipage="/wiki/Voiced_uvular_stop" data-title="Voiced uvular stop"><source src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Voiced_uvular_stop.oga"></audio>
+    <audio preload="none" id="ʡ" data-wikipage="/wiki/Epiglottal_stop" data-title="Epiglottal stop"><source src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Epiglottal_stop.ogg"></audio>
+    <audio preload="none" id="ʔ" data-wikipage="/wiki/Glottal_stop" data-title="Glottal stop"><source src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Glottal_stop.ogg"></audio>
+    <audio preload="none" id="ɸ" data-wikipage="/wiki/Fricative_consonant" data-title="Fricative consonant"><source src="https://upload.wikimedia.org/wikipedia/commons/4/41/Voiceless_bilabial_fricative.ogg"></audio>
+    <audio preload="none" id="β" data-wikipage="/wiki/Voiced_bilabial_fricative" data-title="Voiced bilabial fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/3/37/Voiced_bilabial_fricative.ogg"></audio>
+    <audio preload="none" id="f" data-wikipage="/wiki/Voiceless_labiodental_fricative" data-title="Voiceless labiodental fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/3/33/Voiceless_labiodental_fricative.ogg"></audio>
+    <audio preload="none" id="v" data-wikipage="/wiki/Voiced_labiodental_fricative" data-title="Voiced labiodental fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/8/85/Voiced_labiodental_fricative.ogg"></audio>
+    <audio preload="none" id="θ" data-wikipage="/wiki/Voiceless_dental_fricative" data-title="Voiceless dental fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/8/80/Voiceless_dental_fricative.ogg"></audio>
+    <audio preload="none" id="ð" data-wikipage="/wiki/Voiced_dental_fricative" data-title="Voiced dental fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Voiced_dental_fricative.ogg"></audio>
+    <audio preload="none" id="s" data-wikipage="/wiki/Voiceless_alveolar_fricative#Voiceless_alveolar_sibilant" data-title="Voiceless alveolar fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Voiceless_alveolar_sibilant.ogg"></audio>
+    <audio preload="none" id="z" data-wikipage="/wiki/Voiced_alveolar_fricative#Voiced_alveolar_sibilant" data-title="Voiced alveolar fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/c/c0/Voiced_alveolar_sibilant.ogg"></audio>
+    <audio preload="none" id="ʃ" data-wikipage="/wiki/Voiceless_palato-alveolar_sibilant" data-title="Voiceless palato-alveolar sibilant"><source src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Voiceless_palato-alveolar_sibilant.ogg"></audio>
+    <audio preload="none" id="ʒ" data-wikipage="/wiki/Voiced_palato-alveolar_sibilant" data-title="Voiced palato-alveolar sibilant"><source src="https://upload.wikimedia.org/wikipedia/commons/3/30/Voiced_palato-alveolar_sibilant.ogg"></audio>
+    <audio preload="none" id="ʂ" data-wikipage="/wiki/Voiceless_retroflex_sibilant" data-title="Voiceless retroflex sibilant"><source src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Voiceless_retroflex_sibilant.ogg"></audio>
+    <audio preload="none" id="ʐ" data-wikipage="/wiki/Voiced_retroflex_sibilant" data-title="Voiced retroflex sibilant"><source src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Voiced_retroflex_sibilant.ogg"></audio>
+    <audio preload="none" id="ç" data-wikipage="/wiki/Voiceless_palatal_fricative#Palatal" data-title="Voiceless palatal fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Voiceless_palatal_fricative.ogg"></audio>
+    <audio preload="none" id="ʝ" data-wikipage="/wiki/Voiced_palatal_fricative#Palatal" data-title="Voiced palatal fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Voiced_palatal_fricative.ogg"></audio>
+    <audio preload="none" id="x" data-wikipage="/wiki/Voiceless_velar_fricative" data-title="Voiceless velar fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Voiceless_velar_fricative.ogg"></audio>
+    <audio preload="none" id="ɣ" data-wikipage="/wiki/Voiced_velar_fricative" data-title="Voiced velar fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/4/47/Voiced_velar_fricative.ogg"></audio>
+    <audio preload="none" id="χ" data-wikipage="/wiki/Voiceless_uvular_fricative" data-title="Voiceless uvular fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Voiceless_uvular_fricative.ogg"></audio>
+    <audio preload="none" id="ʁ" data-wikipage="/wiki/Voiced_uvular_fricative" data-title="Voiced uvular fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/a/af/Voiced_uvular_fricative.ogg"></audio>
+    <audio preload="none" id="ħ" data-wikipage="/wiki/Voiceless_pharyngeal_fricative" data-title="Voiceless pharyngeal fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Voiceless_pharyngeal_fricative.ogg"></audio>
+    <audio preload="none" id="ʕ" data-wikipage="/wiki/Voiced_pharyngeal_fricative" data-title="Voiced pharyngeal fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Voiced_pharyngeal_fricative.ogg"></audio>
+    <audio preload="none" id="h" data-wikipage="/wiki/Voiceless_glottal_fricative" data-title="Voiceless glottal fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/d/da/Voiceless_glottal_fricative.ogg"></audio>
+    <audio preload="none" id="ɦ" data-wikipage="/wiki/Voiced_glottal_fricative" data-title="Voiced glottal fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Voiced_glottal_fricative.ogg"></audio>
+    <audio preload="none" id="ʋ" data-wikipage="/wiki/Approximant_consonant" data-title="Approximant consonant"><source src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Labiodental_approximant.ogg"></audio>
+    <audio preload="none" id="ɹ" data-wikipage="/wiki/Alveolar_approximant" class="mw-redirect" data-title="Alveolar approximant"><source src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Alveolar_approximant.ogg"></audio>
+    <audio preload="none" id="ɻ" data-wikipage="/wiki/Retroflex_approximant" data-title="Retroflex approximant"><source src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Retroflex_approximant.ogg"></audio>
+    <audio preload="none" id="j" data-wikipage="/wiki/Palatal_approximant#Palatal" data-title="Palatal approximant"><source src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Palatal_approximant.ogg"></audio>
+    <audio preload="none" id="ɰ" data-wikipage="/wiki/Voiced_velar_approximant" data-title="Voiced velar approximant"><source src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Voiced_velar_approximant.ogg"></audio>
+    <audio preload="none" id="ʙ" data-wikipage="/wiki/Trill_consonant" data-title="Trill consonant"><source src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Bilabial_trill.ogg"></audio>
+    <audio preload="none" id="r" data-wikipage="/wiki/Voiceless_alveolar_trill" data-title="Voiceless alveolar trill"><source src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Alveolar_trill.ogg"></audio>
+    <audio preload="none" id="ʀ" data-wikipage="/wiki/Retroflex_trill" data-title="Retroflex trill"><source src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Uvular_trill.ogg"></audio>
+    <audio preload="none" id="ʜ" data-wikipage="/wiki/Voiceless_epiglottal_trill" data-title="Voiceless epiglottal trill"><source src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Voiceless_epiglottal_fricative.ogg"></audio>
+    <audio preload="none" id="ʢ" data-wikipage="/wiki/Voiced_epiglottal_trill" data-title="Voiced epiglottal trill"><source src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Voiced_epiglottal_fricative.ogg"></audio>
+    <audio preload="none" id="ⱱ" data-wikipage="/wiki/Flap_consonant" data-title="Flap consonant"><source src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Labiodental_flap.ogg"></audio>
+    <audio preload="none" id="ɾ" data-wikipage="/wiki/Alveolar_flap" class="mw-redirect" data-title="Alveolar flap"><source src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Alveolar_tap.ogg"></audio>
+    <audio preload="none" id="ɽ" data-wikipage="/wiki/Retroflex_flap" data-title="Retroflex flap"><source src="https://upload.wikimedia.org/wikipedia/commons/8/87/Retroflex_flap.ogg"></audio>
+    <audio preload="none" id="ɬ" data-wikipage="/wiki/Uvular_flap" data-title="Uvular flap"><source src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Voiceless_alveolar_lateral_fricative.ogg"></audio>
+    <audio preload="none" id="ɮ" data-wikipage="/wiki/Voiced_alveolar_lateral_fricative" class="mw-redirect" data-title="Voiced alveolar lateral fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Voiced_alveolar_lateral_fricative.ogg"></audio>
+    <audio preload="none" id="l" data-wikipage="/wiki/Voiceless_retroflex_lateral_fricative" data-title="Voiceless retroflex lateral fricative"><source src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Alveolar_lateral_approximant.ogg"></audio>
+    <audio preload="none" id="ɭ" data-wikipage="/wiki/Retroflex_lateral_approximant" data-title="Retroflex lateral approximant"><source src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Retroflex_lateral_approximant.ogg"></audio>
+    <audio preload="none" id="ʎ" data-wikipage="/wiki/Palatal_lateral_approximant" data-title="Palatal lateral approximant"><source src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Palatal_lateral_approximant.ogg"></audio>
+    <audio preload="none" id="ʟ" data-wikipage="/wiki/Velar_lateral_approximant" class="mw-redirect" data-title="Velar lateral approximant"><source src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Velar_lateral_approximant.ogg"></audio>
+    <audio preload="none" id="ɺ" data-wikipage="/wiki/Lateral_flap" data-title="Lateral flap"><source src="https://upload.wikimedia.org/wikipedia/commons/d/df/Alveolar_lateral_flap.ogg"></audio>
+
+    <!--######### VOWELS-->
+
+    <audio preload="none" id="i" data-wikipage="/wiki/Close_front_unrounded_vowel" data-title="Close front unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/9/91/Close_front_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="y" data-wikipage="/wiki/Close_front_rounded_vowel" data-title="Close front rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Close_front_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɨ" data-wikipage="/wiki/Close_central_unrounded_vowel" data-title="Close central unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/5/53/Close_central_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ʉ" data-wikipage="/wiki/Close_central_rounded_vowel" data-title="Close central rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/6/66/Close_central_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɯ" data-wikipage="/wiki/Close_back_unrounded_vowel" data-title="Close back unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Close_back_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="u" data-wikipage="/wiki/Close_back_rounded_vowel" data-title="Close back rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Close_back_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɪ" data-wikipage="/wiki/Near-close_near-front_unrounded_vowel" data-title="Near-close near-front unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Near-close_near-front_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ʏ" data-wikipage="/wiki/Near-close_near-front_rounded_vowel" data-title="Near-close near-front rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Near-close_near-front_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɪ̈" data-wikipage="/wiki/Near-close_central_unrounded_vowel" data-title="Near-close central unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Near-close_central_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ʊ̈̈" data-wikipage="/wiki/Near-close_central_rounded_vowel" data-title="Near-close central rounded vowel"> <!--FIXME:missing--> </audio>
+    <audio preload="none" id="ʊ" data-wikipage="/wiki/Near-close_near-back_rounded_vowel" data-title="Near-close near-back rounded vowel"> <source src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Near-close_near-back_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="e" data-wikipage="/wiki/Close-mid_front_unrounded_vowel" data-title="Close-mid front unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Close-mid_front_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ø" data-wikipage="/wiki/Close-mid_front_rounded_vowel" data-title="Close-mid front rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/5/53/Close-mid_front_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɘ" data-wikipage="/wiki/Close-mid_central_unrounded_vowel" data-title="Close-mid central unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/6/60/Close-mid_central_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɵ" data-wikipage="/wiki/Close-mid_central_rounded_vowel" data-title="Close-mid central rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Close-mid_central_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɤ" data-wikipage="/wiki/Close-mid_back_unrounded_vowel" data-title="Close-mid back unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/2/26/Close-mid_back_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="o" data-wikipage="/wiki/Close-mid_back_rounded_vowel" data-title="Close-mid back rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/8/84/Close-mid_back_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="e̞" data-wikipage="/wiki/Mid_front_unrounded_vowel" data-title="Mid front unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Mid_front_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ø̞" data-wikipage="/wiki/Mid_front_rounded_vowel" data-title="Mid front rounded vowel"> <!--FIXME:missing--> </audio>
+    <audio preload="none" id="ə" data-wikipage="/wiki/Mid_central_vowel#Mid_central_unrounded_vowel" data-title="Mid central vowel"> <source src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Mid-central_vowel.ogg"></audio>
+    <audio preload="none" id="ɤ̞" data-wikipage="/wiki/Mid_back_unrounded_vowel" data-title="Mid back unrounded vowel"> <!--FIXME: missing--> </audio>
+    <audio preload="none" id="o̞" data-wikipage="/wiki/Mid_back_rounded_vowel" data-title="Mid back rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Mid_back_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɛ" data-wikipage="/wiki/Open-mid_front_unrounded_vowel" data-title="Open-mid front unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/7/71/Open-mid_front_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="œ" data-wikipage="/wiki/Open-mid_front_rounded_vowel" data-title="Open-mid front rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/0/00/Open-mid_front_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɜ" data-wikipage="/wiki/Open-mid_central_unrounded_vowel" data-title="Open-mid central unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/0/01/Open-mid_central_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɞ" data-wikipage="/wiki/Open-mid_central_rounded_vowel" data-title="Open-mid central rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Open-mid_central_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ʌ" data-wikipage="/wiki/Open-mid_back_unrounded_vowel" data-title="Open-mid back unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/9/92/Open-mid_back_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɔ" data-wikipage="/wiki/Open-mid_back_rounded_vowel" data-title="Open-mid back rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/0/02/Open-mid_back_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="æ" data-wikipage="/wiki/Near-open_front_unrounded_vowel" data-title="Near-open front unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Near-open_front_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɐ" data-wikipage="/wiki/Near-open_central_unrounded_vowel" class="mw-redirect" data-title="Near-open central unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/2/22/Near-open_central_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="a" data-wikipage="/wiki/Open_front_unrounded_vowel" data-title="Open front unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/6/65/Open_front_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɶ" data-wikipage="/wiki/Open_front_rounded_vowel" data-title="Open front rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Open_front_rounded_vowel.ogg"></audio>
+    <audio preload="none" id="ä" data-wikipage="/wiki/Open_central_unrounded_vowel" data-title="Open central unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/5/50/Open_central_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɑ" data-wikipage="/wiki/Open_back_unrounded_vowel" data-title="Open back unrounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Open_back_unrounded_vowel.ogg"></audio>
+    <audio preload="none" id="ɒ" data-wikipage="/wiki/Open_back_rounded_vowel" data-title="Open back rounded vowel"><source src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Open_back_rounded_vowel.ogg"></audio>
+    </body>
+</html>
